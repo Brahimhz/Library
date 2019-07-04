@@ -69,34 +69,61 @@
 
 
 
-  <form method="Get" action="" id="frm">
+  <form method="post" action="/SearchGuest" id="frm" autocomplete="off">
     <div class="form-group">
 
       <div class="form-group row">
         <label for="colFormLabelLg" class="col-sm-4 col-form-label col-form-label-md">Livre</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control form-control-md" id="colFormLabelLg" placeholder="Le nom du livre">
+          <input type="text" class="form-control form-control-md" name="Slivre" id="colFormLabelLg" placeholder="Le nom du livre">
         </div>
       </div>
 
       <div class="form-group row">
         <label for="colFormLabelLg" class="col-sm-4 col-form-label col-form-label-md">Auteur</label>
+
+        <%@ page import = "java.sql.*" %>
+        <%
+          Class.forName("com.mysql.jdbc.Driver");
+          String link1="jdbc:mysql://localhost:3306/biblio";
+          Connection connection1= DriverManager.getConnection(link1,"root","");
+
+          Statement state1= connection1.createStatement();
+          ResultSet resultSet1= state1.executeQuery("select * from auteur order by nom asc ");
+
+
+
+        %>
+
         <div class="col-sm-8">
-          <input type="text" class="form-control form-control-md" id="colFormLabelLg" placeholder="Le nom d'auteur">
+          <input type="text" class="form-control form-control-md" id="colFormLabelLg" placeholder="Le nom d'auteur" name="Sauteur" autocomplete="false" list="Sauteur1">
+
+          <datalist id="Sauteur1">
+            <%
+              while (resultSet1.next())
+              {
+
+
+            %>
+            <option value="<%= (String.valueOf(resultSet1.getInt(1))+":"+(resultSet1.getString(2)+" "+(resultSet1.getString(3))))%>"></option>
+
+            <% } %>
+          </datalist>
+
         </div>
       </div>
 
       <div class="form-group row">
         <label for="colFormLabelLg" class="col-sm-4 col-form-label col-form-label-md">Domaine</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control form-control-md" id="colFormLabelLg" placeholder="Le nom du domaine">
+          <input type="text" class="form-control form-control-md" id="colFormLabelLg" placeholder="Le nom du domaine" name="Sdomaine">
         </div>
       </div>
     </div>
 
     <div class="recherche">
 
-      <button type="button" class="btn btn-light btn-lg" type="submit">Recherche</button>
+      <button  class="btn btn-light btn-lg" type="submit">Recherche</button>
 
 
     </div>

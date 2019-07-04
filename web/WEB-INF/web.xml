@@ -97,6 +97,16 @@
         <servlet-name>search</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>SearchGuest</servlet-name>
+        <servlet-class>MVC.Controller.ServletSearchGuest</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>SearchGuest</servlet-name>
+        <url-pattern>/SearchGuest</url-pattern>
+    </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

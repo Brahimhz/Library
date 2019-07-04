@@ -33,15 +33,14 @@ public class ServletSearch extends HttpServlet {
 
         connectBdd connectBdd=new connectBdd();
 
+        try {
         if((Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //0
         {
 
             response.sendRedirect("Main.jsp");
         }
 
-        else
-        {
-          try {
+
             if((!Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //1
                 resultSet= connectBdd.searchL(Slivre);
 
@@ -127,10 +126,10 @@ public class ServletSearch extends HttpServlet {
         }
 
 
-        RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("afficheAdmine.jsp");
-        dispatcher.forward(request,response);
+            RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("afficheAdmine.jsp");
+            dispatcher.forward(request,response);
         }
-    }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
