@@ -1,0 +1,53 @@
+body
+{
+    line-height: 0;
+    background-image:url("library.jpg");
+    background-repeat: no-repeat;
+    background-size: cover ; 
+}
+.bg-dark
+{
+ background-color: #343a40e8!important;
+}
+
+label.col-sm-4.col-form-label.col-form-label-md {
+    text-align: center;
+        padding-top: 0px;
+
+}
+
+.row
+{
+    margin: 20px 0px ; 
+}
+#frm
+{
+    width:  70% ;
+    margin:   10% auto ; 
+ background-color: #343a40e8!important;
+    font-size: 25px ;
+    font-weight: bolder;
+    color:white ; 
+    padding: 2% ; 
+        border: 2px solid #343a40e8 ; 
+        border-radius: 20px ; 
+}
+
+.form-group
+{
+    padding: auto ;  
+}
+
+
+.modal-header {
+    justify-content: center!important;
+}
+
+#connBut
+{
+    margin: 10px auto ; 
+}
+.recherche
+{
+    text-align: center ; 
+}

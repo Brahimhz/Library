@@ -1,0 +1,26 @@
+body
+{
+    line-height: 0;
+    background-image:url("library.jpg");
+    background-repeat: no-repeat;
+    background-size: cover ; 
+}
+
+
+.bg-dark
+{
+ background-color: #343a40e8!important;
+}
+.container
+{
+    margin-top: 7%;
+}
+
+.table td, .table th
+{
+    line-height: 2 ; 
+}
+
+.table thead th {
+    vertical-align: middle;
+}
