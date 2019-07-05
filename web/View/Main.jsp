@@ -46,7 +46,7 @@
                                     <input type="number" name="ISSN" placeholder="ISSN" class="form-control">
                                 </div>
                                 <div class="form-group">
-            	  					<input type="text" name="titre" placeholder="Titre" class="form-control">
+            	  					<input type="text" name="titre" placeholder="Titre" class="form-control" >
             	  				</div>
             	  				<div class="form-group">
             	  					<input type="text" name="resume" placeholder="Résumé" class="form-control">

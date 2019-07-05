@@ -33,7 +33,7 @@
       <ul class="navbar-nav navbar-nav flex-row ml-md-auto d-none d-md-flex">
            <li class="nav-item">
             <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px">Login</button>
-               <a href="index.jsp"/> <button type="button" class="btn btn-light btn-lg" name="recherche" style="margin: 0px 10px" >Recherche</button>
+               <a href="index.jsp"> <button type="button" class="btn btn-light btn-lg" name="recherche" style="margin: 0px 10px" >Recherche</button></a>
             <div class="modal" id="popupModal" tabindex="-1">
             	  <div class="modal-dialog modal-sm">
             	  	<div class="modal-content">
@@ -41,7 +41,7 @@
             	  			<h4 class="modal-title">Connectez vous</h4>
             	  		</div>
             	  		<div class="modal-body">
-            	  			<form method="post" action="">
+            	  			<form method="post" action="/login">
             	  				<div class="form-group">
             	  					<input type="text" name="nom" placeholder="Nom" class="form-control">
             	  				</div>

@@ -27,3 +27,6 @@ body
 .table thead th {
     vertical-align: middle;
 }
+h4.modal-title {
+    color: black;
+}

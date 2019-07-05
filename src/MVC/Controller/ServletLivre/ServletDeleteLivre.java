@@ -13,20 +13,22 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletDeleteLivre")
 public class ServletDeleteLivre extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int issn=Integer.parseInt(request.getParameter("ISSN"));
+
+        connectBdd connectBdd=new connectBdd();
+        try {
+            connectBdd.deleteEcrit(issn);
+            connectBdd.deleteLivre(issn);
+
+            response.sendRedirect("Main.jsp");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int issn=0;
-        
-        connectBdd connectBdd=new connectBdd();
-        try {
-            connectBdd.deleteLivre(issn);
-            connectBdd.deleteEcrit(issn);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
 
     }
 }

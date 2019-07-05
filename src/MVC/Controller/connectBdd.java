@@ -43,15 +43,14 @@ public class connectBdd {
         statement.close();
     }
 
-    public void editLivre(Livre livre , int issn) throws SQLException {
+    public void editLivre(Livre livre) throws SQLException {
 
-        PreparedStatement statement = connection.prepareStatement("update livre SET issn=? , titre=? , resume = ? , nbrpage=? , domaine =? where issn=? ");
-        statement.setInt(1,livre.getIssn());
-        statement.setString(2,livre.getTitre());
-        statement.setString(3,livre.getResume());
-        statement.setInt(4,livre.getNbrPage());
-        statement.setString(5,livre.getDomaine());
-        statement.setInt(6,issn);
+        PreparedStatement statement = connection.prepareStatement("update livre SET titre=? , resume = ? , nbrpage=? , domaine =? where issn=? ");
+        statement.setString(1,livre.getTitre());
+        statement.setString(2,livre.getResume());
+        statement.setInt(3,livre.getNbrPage());
+        statement.setString(4,livre.getDomaine());
+        statement.setInt(5,livre.getIssn());
 
 
         statement.executeUpdate();
@@ -123,10 +122,10 @@ public class connectBdd {
         statement.close();
     }
 
-    public void editEcrit(int lastIssn, int newIssn)throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("update ecrit set issn=? where issn=?");
-        statement.setInt(1,newIssn);
-        statement.setInt(2,lastIssn);
+    public void editEcrit(int num, int issn)throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("update ecrit set num=? where issn=?");
+        statement.setInt(1,num);
+        statement.setInt(2,issn);
 
         statement.executeUpdate();
 

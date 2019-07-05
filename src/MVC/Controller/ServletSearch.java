@@ -112,7 +112,6 @@ public class ServletSearch extends HttpServlet {
             }
 
 
-
         request.setAttribute("listL",listL);
 
         if(!Sauteur.isEmpty())
