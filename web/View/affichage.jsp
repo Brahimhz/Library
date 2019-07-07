@@ -53,9 +53,7 @@
                                                <button class="btn btn-primary btn-group-justified" id="connBut"  type="submit">Connecter</button>
 
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="chkRember">Souvenez moi</label>
-                                            </div> 
+
             	  			</form>
             	  		</div>
             	  	</div>

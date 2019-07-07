@@ -19,6 +19,11 @@
     <title>$Title$</title>
   </head>
   <body>
+  <% Boolean erreur=Boolean.valueOf(String.valueOf(request.getAttribute("erreur"))) ;
+                                                if(erreur) {%>
+  <script>alert("Nom utilisateur ou mot de passe incorrect!");</script> <% } %>
+
+
   <header class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand  mb-0 h1" href="#" style="font-size: 28px">Biblio</a>
 
@@ -42,15 +47,12 @@
                     <div class="form-group">
                       <input type="password" name="password" placeholder="Mot de pass" class="form-control">
                     </div>
-                    <div > <% Object erreur= request.getAttribute("erreur");
-                                                if(erreur!=null) out.print(erreur);  %> </div>
+
                     <div style="text-align: center">
                       <button class="btn btn-primary btn-group-justified" id="connBut"  type="submit">Connecter</button>
 
                     </div>
-                    <div class="checkbox">
-                      <label><input type="checkbox" name="chkRember">Souvenez moi</label>
-                    </div>
+
                   </form>
                 </div>
               </div>
