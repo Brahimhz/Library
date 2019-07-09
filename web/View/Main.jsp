@@ -7,7 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="MVC.Model.Livre" %>
 <%@page import="java.util.List" %>
-<% Object user=session.getAttribute("user");
+<%
+    Object user=session.getAttribute("user");
     if (user!=null)
     {
 
@@ -146,17 +147,7 @@
             
             
             
-           <a href="index.jsp"><button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px" onclick="nullSession">Disconnect
-
-           <script>
-               function nullSession() {
-                   <%
-                        session.setAttribute("user",null);
-                   %>
-               }
-           </script>
-           </button></a>
-
+           <a href="/LogOut" methods="get"><button type="submit" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px">Disconnect</button></a>
            </li>
          
          <li class="nav-item">

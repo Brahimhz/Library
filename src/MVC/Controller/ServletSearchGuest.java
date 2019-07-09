@@ -36,7 +36,12 @@ public class ServletSearchGuest extends HttpServlet {
         if((Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //0
         {
 
-            response.sendRedirect("Index.jsp");
+            //response.sendRedirect("index.jsp");
+
+            request.setAttribute("search",false);
+            RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("affichage.jsp");
+            dispatcher.forward(request,response);
+
         }
 
         else
@@ -126,7 +131,7 @@ public class ServletSearchGuest extends HttpServlet {
                 request.setAttribute("type",0);
             }
 
-
+            request.setAttribute("search",true);
             RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("affichage.jsp");
             dispatcher.forward(request,response);
         }

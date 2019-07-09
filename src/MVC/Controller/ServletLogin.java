@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 public class ServletLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Boolean erreur=false;
-
         String Iuser=getServletConfig().getInitParameter("user");
         String Ipassword = getServletConfig().getInitParameter("password");
 
@@ -41,20 +39,12 @@ public class ServletLogin extends HttpServlet {
 
         else
         {
-            erreur=true;
-            request.setAttribute("erreur",erreur);
+            request.setAttribute("erreur",true);
 
 
             RequestDispatcher requestDispatcher=request.getRequestDispatcher("index.jsp");
             requestDispatcher.forward(request,response);
 
-            /*
-            PrintWriter printWriter = response.getWriter();
-            printWriter.print("<script>\n" +
-                    "function myFunction() {\n" +
-                    "  alert(\"Nom utilisateur ou mot de passe incorrect!\");\n" +
-                    "}\n" +
-                    "</script>"); */
         }
 
 

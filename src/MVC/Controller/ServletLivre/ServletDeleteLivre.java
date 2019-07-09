@@ -14,7 +14,7 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletDeleteLivre")
 public class ServletDeleteLivre extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession(false);
+        HttpSession session=request.getSession();
 
         Object user = session.getAttribute("user");
         if((user!=null && !session.isNew()) || (request.getRequestURI().equals("/index.jsp")) )

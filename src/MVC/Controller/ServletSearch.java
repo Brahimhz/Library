@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "ServletSearch")
 public class ServletSearch extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
 
 
         Object user = session.getAttribute("user");

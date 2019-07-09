@@ -8,6 +8,16 @@
 <%@page import="MVC.Model.Livre" %>
 <%@page import="java.util.List" %>
 <%@ page import="MVC.Model.Auteur" %>
+
+
+<%
+    Boolean search= Boolean.valueOf(String.valueOf(request.getAttribute("search")));
+
+    if(search!=null)
+    {
+        if (search){
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -146,3 +156,13 @@
         
     </body>
 </html>
+<%
+        }
+        else{ %>
+<script>
+    alert('Vous devez Tapez votre recherche');
+    window.location = '/index.jsp';
+</script>
+ <%       }
+    }
+%>

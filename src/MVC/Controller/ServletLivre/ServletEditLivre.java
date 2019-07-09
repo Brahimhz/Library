@@ -15,7 +15,7 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletEditLivre")
 public class ServletEditLivre extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession(false);
+        HttpSession session=request.getSession();
 
 
         Object user = session.getAttribute("user");

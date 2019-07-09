@@ -39,16 +39,7 @@
       <ul class="navbar-nav navbar-nav flex-row ml-md-auto d-none d-md-flex">
           
            <li class="nav-item">
-               <a href="index.jsp"> <button type="button" class="btn btn-light btn-lg" name="dec" style="margin: 0px 10px"onclick="nullSession">Disconnect
-
-                   <script>
-                       function nullSession() {
-                           <%
-                                session.setAttribute("user",null);
-                           %>
-                       }
-                   </script>
-               </button></a>
+               <a href="/LogOut" > <button type="button" class="btn btn-light btn-lg" name="dec" style="margin: 0px 10px" >Disconnect</button></a>
                    <a href="Main.jsp"> <button type="button" class="btn btn-light btn-lg" name="recherche" style="margin: 0px 10px" onclick="test">Recherche</button></a>
 
             <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popuplivre" style="margin: 0px 10px" >+livre</button>
