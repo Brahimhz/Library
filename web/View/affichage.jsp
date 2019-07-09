@@ -11,6 +11,13 @@
 
 
 <%
+    Boolean authorTest= Boolean.valueOf(String.valueOf(request.getAttribute("authorTest")));
+
+    if (authorTest!=null)
+    {
+        if (authorTest)
+        {
+
     Boolean search= Boolean.valueOf(String.valueOf(request.getAttribute("search")));
 
     if(search!=null)
@@ -165,4 +172,12 @@
 </script>
  <%       }
     }
-%>
+
+ } else{ %>
+<script>
+    alert('l\'autheur n\'exist pas dans notre base de donnee ');
+    window.location = '/index.jsp';
+</script>
+<% }} %>
+
+

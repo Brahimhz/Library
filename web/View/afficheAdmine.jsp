@@ -11,6 +11,12 @@
 <% Object user=session.getAttribute("user");
     if (user!=null)
     {
+        Boolean authorTest= Boolean.valueOf(String.valueOf(request.getAttribute("authorTest")));
+
+        if (authorTest!=null)
+        {
+            if (authorTest)
+            {
 %>
 
 <!DOCTYPE html>
@@ -340,7 +346,16 @@
     </body>
 </html>
 
-<%}
+<%
+
+} else{ %>
+<script>
+    alert('l\'autheur n\'exist pas dans notre base de donnee ');
+    window.location = '/Main.jsp';
+</script>
+<% }}
+
+    }
     else
     {%>
 <script>

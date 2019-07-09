@@ -19,8 +19,6 @@ import java.util.List;
 public class ServletSearchGuest extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
         String Slivre=request.getParameter("Slivre");
         String Sauteur=request.getParameter("Sauteur");
         String Sdomaine=request.getParameter("Sdomaine");
@@ -33,14 +31,35 @@ public class ServletSearchGuest extends HttpServlet {
 
         ResultSet resultSet=null;
 
+        Boolean authorTest=false;
 
         connectBdd connectBdd=new connectBdd();
+
+        if(!Sauteur.isEmpty())
+        {
+           try{
+               resultSet=connectBdd.allAuteur();
+               while (resultSet.next()){
+                   String author=(String.valueOf(resultSet.getInt(1)))+":"+resultSet.getString(2)+" "+resultSet.getString(3);
+                   System.out.println(author);
+                   if(author.equals(Sauteur))
+                   {
+                       authorTest=true;
+                       break;
+                   }
+               }
+
+           }catch (SQLException e){e.printStackTrace();}catch (NullPointerException e){}
+
+        }
+        if(authorTest || Sauteur.isEmpty())
+        {
 
         if((Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //0
         {
 
             //response.sendRedirect("index.jsp");
-
+            request.setAttribute("authorTest",true);
             request.setAttribute("search",false);
             RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("affichage.jsp");
             dispatcher.forward(request,response);
@@ -135,9 +154,17 @@ public class ServletSearchGuest extends HttpServlet {
             }
 
             request.setAttribute("search",true);
+            request.setAttribute("authorTest",true);
             RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("affichage.jsp");
             dispatcher.forward(request,response);
         }
+    }else
+        {
+            request.setAttribute("authorTest",authorTest);
+            RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("affichage.jsp");
+            dispatcher.forward(request,response);
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

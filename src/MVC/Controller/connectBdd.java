@@ -149,6 +149,15 @@ public class connectBdd {
         return resultSet;
     }
 
+    public ResultSet allAuteur() throws SQLException {
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM auteur order by nom asc");
+        ResultSet resultSet=statement.executeQuery();
+        return resultSet;
+    }
+
+
+
     public ResultSet searchL(String slivre) throws SQLException {
 
         PreparedStatement state = connection.prepareStatement("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.titre=?");

@@ -98,7 +98,7 @@
         %>
 
         <div class="col-sm-8">
-          <input type="text" class="form-control form-control-md" id="colFormLabelLg" placeholder="Le nom d'auteur" name="Sauteur" autocomplete="false" list="Sauteur1">
+          <input type="text" class="form-control form-control-md" id="author" placeholder="Le nom d'auteur" name="Sauteur" autocomplete="false" list="Sauteur1">
 
           <datalist id="Sauteur1">
             <%
@@ -126,7 +126,6 @@
     <div class="recherche">
 
       <button  class="btn btn-light btn-lg" type="submit">Recherche</button>
-
 
     </div>
 

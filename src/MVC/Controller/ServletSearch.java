@@ -39,8 +39,31 @@ public class ServletSearch extends HttpServlet {
 
         ResultSet resultSet=null;
 
+        Boolean authorTest=false;
 
         connectBdd connectBdd=new connectBdd();
+
+            if(!Sauteur.isEmpty())
+            {
+                try{
+                    resultSet=connectBdd.allAuteur();
+                    while (resultSet.next()){
+
+                        String author=(String.valueOf(resultSet.getInt(1)))+":"+resultSet.getString(2)+" "+resultSet.getString(3);
+                        if(author.equals(Sauteur))
+                        {
+                            authorTest=true;
+                            break;
+                        }
+                    }
+
+                }catch (SQLException e){e.printStackTrace();}catch (NullPointerException e){}
+
+            }else
+            {
+                authorTest=true;
+            }
+        if(authorTest){
 
         try {
         if((Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //0
@@ -124,7 +147,9 @@ public class ServletSearch extends HttpServlet {
             String[] Snum=Sauteur.split(":");
             request.setAttribute("Sauteur",Snum[1]);
             request.setAttribute("type",1);
+
         }else{
+            request.setAttribute("authorTest",true);
             request.setAttribute("listA",listA);
             request.setAttribute("type",0);
         }
@@ -133,6 +158,12 @@ public class ServletSearch extends HttpServlet {
             RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("afficheAdmine.jsp");
             dispatcher.forward(request,response);
 
+        } else
+        {
+            request.setAttribute("authorTest",authorTest);
+            RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("afficheAdmine.jsp");
+            dispatcher.forward(request,response);
+        }
         }else {
             response.sendRedirect("index.jsp");
         }
