@@ -3,7 +3,6 @@ package MVC.Controller;
 import MVC.Model.Auteur;
 import MVC.Model.Livre;
 
-import javax.servlet.RequestDispatcher;
 import java.sql.*;
 
 
@@ -143,67 +142,82 @@ public class connectBdd {
     }
 
 
+    public ResultSet allLivre() throws SQLException {
 
+      PreparedStatement statement = connection.prepareStatement("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn");
+        ResultSet resultSet=statement.executeQuery();
+        return resultSet;
+    }
 
     public ResultSet searchL(String slivre) throws SQLException {
 
-
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.titre=\""+slivre+" \" ");
+        PreparedStatement state = connection.prepareStatement("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.titre=?");
+        state.setString(1,slivre);
+        ResultSet resultSet = state.executeQuery();
 
         return resultSet;
     }
 
     public ResultSet searchA(int sauteur) throws SQLException {
 
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("select * from livre where issn in(" +
-                                                        "select issn from ecrit where num=\""+sauteur+"\" )");
+        PreparedStatement state = connection.prepareStatement("select * from livre where issn in(" +
+                                                                      "select issn from ecrit where num=?)");
+        state.setInt(1,sauteur);
+
+        ResultSet resultSet = state.executeQuery();
         return resultSet;
     }
 
     public ResultSet searchD(String sdomaine) throws SQLException {
 
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.domaine=\""+sdomaine+"\"");
+        PreparedStatement state = connection.prepareStatement("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.domaine=?");
+        state.setString(1,sdomaine);
 
+        ResultSet resultSet = state.executeQuery();
         return resultSet;
     }
 
     public ResultSet searchLA(String slivre, int sauteur) throws SQLException {
 
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("select * from livre where titre=\""+slivre+"\" and issn in " +
-                                                        " (select * from ecrit where num=\""+sauteur+"\" )");
+        PreparedStatement state = connection.prepareStatement("select * from livre where titre=? and issn in " +
+                                                          " (select issn from ecrit where num=? )");
+        state.setString(1,slivre);
+        state.setInt(2,sauteur);
 
-
+        ResultSet resultSet = state.executeQuery();
         return resultSet;
 
     }
 
     public ResultSet searchLD(String slivre, String sdomaine) throws SQLException {
 
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.titre=\""+slivre+"\" and l.domaine="+sdomaine);
+        PreparedStatement state = connection.prepareStatement("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn and l.titre=? and l.domaine=?");
+        state.setString(1,slivre);
+        state.setString(2,sdomaine);
 
+        ResultSet resultSet = state.executeQuery();
         return resultSet;
     }
 
     public ResultSet searchAD(int sauteur, String sdomaine) throws SQLException {
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("select * from livre where domaine="+sdomaine+" and issn in " +
-                                                      " (select * from ecrit where num in " +
-                                                          "( select * from auteur where nom ="+sauteur+"))");
+        PreparedStatement state = connection.prepareStatement("select * from livre where domaine=? and issn in " +
+                                                                      " (select issn from ecrit where num=?)");
+        state.setString(1,sdomaine);
+        state.setInt(2,sauteur);
 
+        ResultSet resultSet = state.executeQuery();
         return resultSet;
 
     }
 
     public ResultSet searchLAD(String slivre, int sauteur, String sdomaine) throws SQLException {
-        Statement state = connection.createStatement();
-        ResultSet resultSet = state.executeQuery("select * from livre where titre="+slivre+" and domaine ="+sdomaine+" and issn in " +
-                                                        " (select * from ecrit where num=\""+sauteur+"\")");
+        PreparedStatement state = connection.prepareStatement("select * from livre where titre=? and domaine =?and issn in " +
+                                                                     " (select issn from ecrit where num=?)");
+        state.setString(1,slivre);
+        state.setInt(3,sauteur);
+        state.setString(2,sdomaine);
 
+        ResultSet resultSet = state.executeQuery();
         return resultSet;
 
     }

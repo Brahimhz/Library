@@ -44,13 +44,9 @@ public class ServletSearch extends HttpServlet {
 
         try {
         if((Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //0
-        {
+            resultSet=connectBdd.allLivre();
 
-            response.sendRedirect("Main.jsp");
-        }
-
-
-            if((!Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //1
+            else if((!Slivre.isEmpty()) && (Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //1
                 resultSet= connectBdd.searchL(Slivre);
 
             else if((Slivre.isEmpty()) && (!Sauteur.isEmpty()) && (Sdomaine.isEmpty())) //2
@@ -118,7 +114,7 @@ public class ServletSearch extends HttpServlet {
             }
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }catch (NullPointerException e){}
 
 
         request.setAttribute("listL",listL);

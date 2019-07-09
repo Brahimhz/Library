@@ -115,7 +115,7 @@ public class ServletSearchGuest extends HttpServlet {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }catch (NullPointerException e){}
 
 
 
