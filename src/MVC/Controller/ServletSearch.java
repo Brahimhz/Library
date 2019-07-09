@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,14 @@ import java.util.List;
 @WebServlet(name = "ServletSearch")
 public class ServletSearch extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+
+
+        Object user = session.getAttribute("user");
+        if((user!=null && !session.isNew()) || (request.getRequestURI().equals("/index.jsp")) )
+        {
+
+
         String Slivre=request.getParameter("Slivre");
         String Sauteur=request.getParameter("Sauteur");
         String Sdomaine=request.getParameter("Sdomaine");
@@ -124,10 +133,14 @@ public class ServletSearch extends HttpServlet {
             request.setAttribute("type",0);
         }
 
-
+            session.setAttribute("user","admin");
             RequestDispatcher dispatcher= (RequestDispatcher) request.getRequestDispatcher("afficheAdmine.jsp");
             dispatcher.forward(request,response);
+
+        }else {
+            response.sendRedirect("index.jsp");
         }
+    }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

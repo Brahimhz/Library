@@ -7,7 +7,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="MVC.Model.Livre" %>
 <%@page import="java.util.List" %>
+<% Object user=session.getAttribute("user");
+    if (user!=null)
+    {
 
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,21 +45,21 @@
             	  			<h4 class="modal-title">nouveau livre</h4>
             	  		</div>
             	  		<div class="modal-body">
-            	  			<form method="get" action="/addlivre" autocomplete="off">
+            	  			<form method="post" action="/addlivre" autocomplete="off">
                                 <div class="form-group">
-                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control">
+                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-            	  					<input type="text" name="titre" placeholder="Titre" class="form-control" >
+            	  					<input type="text" name="titre" placeholder="Titre" class="form-control" required>
             	  				</div>
             	  				<div class="form-group">
-            	  					<input type="text" name="resume" placeholder="Résumé" class="form-control">
+            	  					<input type="text" name="resume" placeholder="Résumé" class="form-control" required>
             	  				</div> 
                                             <div class="form-group">
-            	  					<input type="number" name="nbrPage" placeholder="Nombre de pages" class="form-control">
+            	  					<input type="number" name="nbrPage" placeholder="Nombre de pages" class="form-control" required>
             	  				</div> 
                                                <div class="form-group">
-            	  					<input type="text" name="domaine" placeholder="domaine" class="form-control">
+            	  					<input type="text" name="domaine" placeholder="domaine" class="form-control" required>
             	  				</div>
                                 <div class="form-group">
                                     <%@ page import = "java.sql.*" %>
@@ -70,7 +74,7 @@
 
 
                                     %>
-                                    <input type="text" name="num" placeholder="auteur" class="form-control" list="Sauteur">
+                                    <input type="text" name="num" placeholder="auteur" class="form-control" list="Sauteur" required>
                                     <datalist id="Sauteur">
                                         <%
                                             while (resultSet.next())
@@ -103,7 +107,7 @@
             
             
             
-            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupauteur" style="margin: 0px 10px">+auteur</button>
+            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupauteur" style="margin: 0px 10px" >+auteur</button>
            
            <div class="modal" id="popupauteur" tabindex="-1">
             	  <div class="modal-dialog modal-sm">
@@ -117,14 +121,14 @@
             	  					<input type="number" name="num" placeholder="Numero d'Auteur" class="form-control" min="0">
             	  				</div>
                                 <div class="form-group">
-                                    <input type="text" name="nom" placeholder="Nom" class="form-control">
+                                    <input type="text" name="nom" placeholder="Nom" class="form-control" required>
                                 </div>
             	  				<div class="form-group">
-            	  					<input type="text" name="prenom" placeholder="Prenom" class="form-control">
+            	  					<input type="text" name="prenom" placeholder="Prenom" class="form-control" required>
             	  				</div> 
                                             <div class="form-group">
 
-            	  					<input type="Date" name="naissance" placeholder="Date de Naissance" class="form-control">
+            	  					<input type="Date" name="naissance" placeholder="Date de Naissance" class="form-control" required>
             	  				</div> 
                                               
                                             <div style="text-align: center">    
@@ -142,7 +146,16 @@
             
             
             
-           <a href="index.jsp"><button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px">Disconnect</button></a>
+           <a href="index.jsp"><button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px" onclick="nullSession">Disconnect
+
+           <script>
+               function nullSession() {
+                   <%
+                        session.setAttribute("user",null);
+                   %>
+               }
+           </script>
+           </button></a>
 
            </li>
          
@@ -208,14 +221,23 @@
                     <div class="form-group row">
     <label for="colFormLabelLg" class="col-sm-4 col-form-label col-form-label-md">Domaine</label>
     <div class="col-sm-8">
-      <input type="text" class="form-control form-control-md" name="Sdomaine" placeholder="Le nom du domaine">
+      <input type="text" class="form-control form-control-md" name="Sdomaine" placeholder="Le nom du domaine" >
     </div>
             </div>
         </div>
-            
+
             <div class="recherche">
                 
-<button  class="btn btn-light btn-lg" type="submit">Recherche</button>
+              <button  class="btn btn-light btn-lg" type="submit" onclick="test">Recherche
+
+              <script>
+                  function test() {
+                      <%
+                            session.setAttribute("user","admin");
+                      %>
+                  }
+              </script>
+              </button>
 
 
             </div>
@@ -241,3 +263,11 @@
         
     </body>
 </html>
+<% }
+else
+{%>
+<script>
+    alert('Vous Devez Authentifier Avant d\'Atteindre Cette Page ');
+    window.location = '/index.jsp';
+</script>
+<%}%>

@@ -8,6 +8,10 @@
 <%@page import="MVC.Model.Livre" %>
 <%@page import="java.util.List" %>
 <%@ page import="MVC.Model.Auteur" %>
+<% Object user=session.getAttribute("user");
+    if (user!=null)
+    {
+%>
 
 <!DOCTYPE html>
 <html>
@@ -35,10 +39,19 @@
       <ul class="navbar-nav navbar-nav flex-row ml-md-auto d-none d-md-flex">
           
            <li class="nav-item">
-               <a href="index.jsp"> <button type="button" class="btn btn-light btn-lg" name="dec" style="margin: 0px 10px">Deconnexion</button></a>
-                   <a href="Main.jsp"> <button type="button" class="btn btn-light btn-lg" name="recherche" style="margin: 0px 10px" >Recherche</button></a>
+               <a href="index.jsp"> <button type="button" class="btn btn-light btn-lg" name="dec" style="margin: 0px 10px"onclick="nullSession">Disconnect
 
-            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popuplivre" style="margin: 0px 10px">+livre</button>
+                   <script>
+                       function nullSession() {
+                           <%
+                                session.setAttribute("user",null);
+                           %>
+                       }
+                   </script>
+               </button></a>
+                   <a href="Main.jsp"> <button type="button" class="btn btn-light btn-lg" name="recherche" style="margin: 0px 10px" onclick="test">Recherche</button></a>
+
+            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popuplivre" style="margin: 0px 10px" >+livre</button>
            
              <div class="modal" id="popuplivre" tabindex="-1">
             	  <div class="modal-dialog modal-sm">
@@ -49,19 +62,19 @@
             	  		<div class="modal-body">
             	  			<form method="post" action="/addlivre" autocomplete="off">
                                 <div class="form-group">
-                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control" autocomplete="false">
+                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control" autocomplete="false" required>
                                 </div>
             	  				<div class="form-group">
-            	  					<input type="text" name="titre" placeholder="Titre" class="form-control" autocomplete="false">
+            	  					<input type="text" name="titre" placeholder="Titre" class="form-control" autocomplete="false" required>
             	  				</div>
             	  				<div class="form-group">
-            	  					<input type="text" name="resume" placeholder="Résumé" class="form-control" autocomplete="false">
+            	  					<input type="text" name="resume" placeholder="Résumé" class="form-control" autocomplete="false" required>
             	  				</div> 
                                             <div class="form-group">
-            	  					<input type="number" name="nbrPage" placeholder="Nombre de pages" class="form-control" autocomplete="false">
+            	  					<input type="number" name="nbrPage" placeholder="Nombre de pages" class="form-control" autocomplete="false" required>
             	  				</div> 
                                                <div class="form-group">
-            	  					<input type="text" name="domaine" placeholder="domaine" class="form-control" autocomplete="false">
+            	  					<input type="text" name="domaine" placeholder="domaine" class="form-control" autocomplete="false" required>
             	  				</div>
 
                                 <div class="form-group">
@@ -77,7 +90,7 @@
 
 
                                     %>
-                                    <input type="text" name="num" placeholder="auteur" class="form-control" list="Sauteur" autocomplete="false">
+                                    <input type="text" name="num" placeholder="auteur" class="form-control" list="Sauteur" autocomplete="false" required>
                                     <datalist id="Sauteur">
                                         <%
                                             while (resultSet.next())
@@ -95,7 +108,7 @@
                                 </div>
 
                                             <div style="text-align: center">    
-                           <button class="btn btn-primary btn-group-justified " id="valideLivre"   type="submit">Valider</button>
+                           <button class="btn btn-primary btn-group-justified " id="valideLivre"   type="submit" onclick="test">Valider</button>
             			</div> 
                                         
                                         </form>
@@ -120,17 +133,17 @@
                        <div class="modal-body">
                            <form method="post" action="/addAuteur">
                                <div class="form-group">
-                                   <input type="text" name="nomAuteur" placeholder="Nom" class="form-control">
+                                   <input type="text" name="nomAuteur" placeholder="Nom" class="form-control" required>
                                </div>
                                <div class="form-group">
-                                   <input type="text" name="prenom" placeholder="Prenom" class="form-control">
+                                   <input type="text" name="prenom" placeholder="Prenom" class="form-control" required>
                                </div>
                                <div class="form-group">
-                                   <input type="Date" name="dateNaiss" placeholder="date de naissance" class="form-control">
+                                   <input type="Date" name="dateNaiss" placeholder="date de naissance" class="form-control" required>
                                </div>
 
                                <div style="text-align: center">
-                                   <button class="btn btn-primary btn-group-justified " id="valideAuteur"   type="submit">Valider</button>
+                                   <button class="btn btn-primary btn-group-justified " id="valideAuteur"   type="submit" onclick="test">Valider</button>
                                </div>
 
                            </form>
@@ -215,7 +228,7 @@
                   out.println("<td>"+list1.get(i).getNom()+" "+list1.get(i).getPrenom()+"</td>");
 
               out.println("<td>\n");
-               out.println("<button type=\"button\" class=\"btn btn-danger badge-pill\" name=\"supprimer\" data-toggle=\"modal\" data-target=\"#popupsupplivre"+i+"\">Supprimer</button>\n");
+               out.println("<button type=\"button\" class=\"btn btn-danger badge-pill\" name=\"supprimer\" data-toggle=\"modal\" data-target=\"#popupsupplivre"+i+"\" >Supprimer</button>\n");
 
                out.println("<div class=\"modal\" id=\"popupsupplivre"+i+"\" tabindex=\"-1\">\n" +
                        "                   <div class=\"modal-dialog modal-sm\">\n" +
@@ -231,7 +244,7 @@
                        "                                       <label style=\" color:black \"> Vous voulez vraiment Supprimer le livre : "+list.get(i).getTitre()+" ?</label>\n" +
                        "                                   </div>\n" +
                        "                                   <div style=\"text-align: center\">\n" +
-                       "                                       <button class=\"btn btn-primary btn-group-justified \" type=\"submit\">Oui</button>\n" +
+                       "                                       <button class=\"btn btn-primary btn-group-justified \" type=\"submit\" onclick=\"test\">Oui</button>\n" +
                        "                                   </div>\n" +
                        "                               </form>\n" +
                        "                           </div>\n" +
@@ -254,20 +267,20 @@
                         "                                    <input type=\"number\" name=\"ISSN\"  class=\"form-control\" value="+list.get(i).getIssn()+" readonly>\n" +
                         "                                </div>"+
                         "            \t  \t\t\t\t<div class=\"form-group\">\n" +
-                        "            \t  \t\t\t\t\t<input type=\"text\" name=\"titre\"  class=\"form-control\" value=\" "+list.get(i).getTitre()+"\" autocomplete=\"false\">"+
+                        "            \t  \t\t\t\t\t<input type=\"text\" name=\"titre\"  class=\"form-control\" value=\" "+list.get(i).getTitre()+"\" autocomplete=\"false\" required>"+
                         "            \t  \t\t\t\t</div>\n" +
                         "            \t  \t\t\t\t<div class=\"form-group\">\n" +
-                        "            \t  \t\t\t\t\t<input type=\"text\" name=\"resume\"  class=\"form-control\" value=\" "+list.get(i).getResume()+"\" autocomplete=\"false\">\n" +
+                        "            \t  \t\t\t\t\t<input type=\"text\" name=\"resume\"  class=\"form-control\" value=\" "+list.get(i).getResume()+"\" autocomplete=\"false\" required>\n" +
                         "            \t  \t\t\t\t</div> \n" +
                         "                                            <div class=\"form-group\">\n" +
-                        "            \t  \t\t\t\t\t<input type=\"number\" name=\"nbrpage\"  class=\"form-control\" value="+list.get(i).getNbrPage()+" autocomplete=\"false\">\n" +
+                        "            \t  \t\t\t\t\t<input type=\"number\" name=\"nbrpage\"  class=\"form-control\" value="+list.get(i).getNbrPage()+" autocomplete=\"false\" required>\n" +
                         "            \t  \t\t\t\t</div> \n" +
                         "                                               <div class=\"form-group\">\n" +
-                        "            \t  \t\t\t\t\t<input type=\"text\" name=\"domaine\"  class=\"form-control\" value=\" "+list.get(i).getDomaine()+"\" autocomplete=\"false\">\n" +
+                        "            \t  \t\t\t\t\t<input type=\"text\" name=\"domaine\"  class=\"form-control\" value=\" "+list.get(i).getDomaine()+"\" autocomplete=\"false\" required>\n" +
                         "            \t  \t\t\t\t</div> \n" );
 
-                        out.println("<input type=\"text\" name=\"num\"  class=\"form-control\" list=\"Sauteur\" autocomplete=\"false\">\n" +
-                                "                                    <datalist id=\"Sauteur\">");
+                        out.println("<input type=\"text\" name=\"num\"  class=\"form-control\" list=\"Sauteur\" autocomplete=\"false\" required>\n" +
+                                "                                    <datalist id=\"Sauteur\" >");
 
 
                 while (resultSet1.next())
@@ -279,7 +292,7 @@
                    out.println("     </datalist>\n" +
                            "                                </div>");
                         out.println("                                            <div style=\"text-align: center\">    \n" +
-                               "                           <button class=\"btn btn-primary btn-group-justified \" id=\"valideLivre\"   type=\"submit\">Valider</button>\n" +
+                               "                           <button class=\"btn btn-primary btn-group-justified \" id=\"valideLivre\"   type=\"submit\" onclick=\"test\">Valider </button>\n" +
                                "            \t\t\t</div> \n" +
                                "                                        \n" +
                                "                                        </form>\n" +
@@ -296,7 +309,13 @@
 
   %>
 
-
+  <script>
+      function test() {
+          <%
+                session.setAttribute("user","admin");
+          %>
+      }
+  </script>
 
   </tbody>
 </table>
@@ -329,3 +348,12 @@
 
     </body>
 </html>
+
+<%}
+    else
+    {%>
+<script>
+    alert('Vous Devez Authentifier Avant d\'Atteindre Cette Page ');
+    window.location = '/index.jsp';
+</script>
+<%}%>
