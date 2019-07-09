@@ -18,6 +18,9 @@ import java.util.List;
 @WebServlet(name = "ServletSearchGuest")
 public class ServletSearchGuest extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+
         String Slivre=request.getParameter("Slivre");
         String Sauteur=request.getParameter("Sauteur");
         String Sdomaine=request.getParameter("Sdomaine");
