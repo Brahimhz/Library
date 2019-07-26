@@ -83,15 +83,14 @@ public class connectBdd {
 
     }
 
-    public void editAuteur(Auteur auteur, int num) throws SQLException {
+    public void editAuteur(Auteur auteur) throws SQLException {
 
-        PreparedStatement statement = connection.prepareStatement("update livre SET num=? , nom=? , prenom = ? , naissance=?  where num=? ");
+        PreparedStatement statement = connection.prepareStatement("update auteur SET  nom=? , prenom = ? , naissance=?  where num=? ");
 
-        statement.setInt(1,auteur.getNum());
-        statement.setString(2,auteur.getNom());
-        statement.setString(3,auteur.getPrenom());
-        statement.setDate(4, (Date) auteur.getNaissance());
-        statement.setInt(5,num);
+        statement.setString(1,auteur.getNom());
+        statement.setString(2,auteur.getPrenom());
+        statement.setDate(3,(Date) auteur.getNaissance());
+        statement.setInt(4 ,auteur.getNum());
 
 
         statement.executeUpdate();
@@ -100,7 +99,7 @@ public class connectBdd {
     }
 
     public void deleteAuteur(int num)throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM livre WHERE issn=? ");
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM auteur WHERE num=? ");
         statement.setInt(1,num);
 
         statement.executeUpdate();

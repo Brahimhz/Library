@@ -4,7 +4,7 @@
     Author     : mus
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@page import="MVC.Model.Livre" %>
 <%@page import="java.util.List" %>
 <%
@@ -30,12 +30,18 @@
     </head>
     <body>
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand  mb-0 h1" href="#" style="font-size: 28px">Biblio</a>
+    <a class="navbar-brand  mb-0 h1" href="Main.jsp" style="font-size: 28px">Biblio</a>
 
   <div class="collapse navbar-collapse  mt-0" id="navbarNav">
      
     </ul>
       <ul class="navbar-nav navbar-nav flex-row ml-md-auto d-none d-md-flex">
+
+          <li class="nav-item">
+              <a class="btn btn-light btn-lg" href="author.jsp"> <img src="author.png"  width="30" height="30" class="d-inline-block align-top" alt=""></a>
+
+          </li>
+
            <li class="nav-item">
             <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popuplivre" style="margin: 0px 10px">+livre</button>
            
@@ -70,7 +76,7 @@
                                         Connection connection= DriverManager.getConnection(link,"root","");
 
                                         Statement state = connection.createStatement();
-                                        ResultSet resultSet = state.executeQuery("select * from auteur order by nom asc ");
+                                        ResultSet resultSet = state.executeQuery("select * from auteur order by num asc ");
 
 
 
@@ -102,56 +108,15 @@
             	  	</div>
             	 </div>
             </div>
-            
-            
-            
-            
-            
-            
-            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupauteur" style="margin: 0px 10px" >+auteur</button>
-           
-           <div class="modal" id="popupauteur" tabindex="-1">
-            	  <div class="modal-dialog modal-sm">
-            	  	<div class="modal-content">
-            	  		<div class="modal-header justify-content-center">
-            	  			<h4 class="modal-title">nouveau Auteur</h4>
-            	  		</div>
-            	  		<div class="modal-body">
-            	  			<form method="get" action="/addAuteur">
-            	  				<div class="form-group">
-            	  					<input type="number" name="num" placeholder="Numero d'Auteur" class="form-control" min="0">
-            	  				</div>
-                                <div class="form-group">
-                                    <input type="text" name="nom" placeholder="Nom" class="form-control" required>
-                                </div>
-            	  				<div class="form-group">
-            	  					<input type="text" name="prenom" placeholder="Prenom" class="form-control" required>
-            	  				</div> 
-                                            <div class="form-group">
 
-            	  					<input type="Date" name="naissance" placeholder="Date de Naissance" class="form-control" required>
-            	  				</div> 
-                                              
-                                            <div style="text-align: center">    
-                           <button class="btn btn-primary btn-group-justified " id="valideAuteur"   type="submit">Valider</button>
-            			</div> 
-                                        
-                                        </form>
-            	  		</div>
-            	  	</div>
-            	 </div>
-            </div>
-            
-            
-            
-            
-            
-            
-           <a href="/LogOut" methods="get"><button type="submit" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px">Disconnect</button></a>
+
+
+
+               <a href="/LogOut" methods="get"><button type="submit" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px">Disconnect</button></a>
            </li>
          
          <li class="nav-item">
-         <a class="nav-link" > <img src="books.svg"  width="40" height="40" class="d-inline-block align-top" alt=""></a>
+             <a class="nav-link" > <img src="books.svg"  width="40" height="40" class="d-inline-block align-top" alt=""></a>
 
       </li>
       </ul>

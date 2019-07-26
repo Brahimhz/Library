@@ -32,7 +32,7 @@ public class ServletAddAuteur extends HttpServlet {
         try {
             connectBdd.addAuteur(auteur);
 
-            response.sendRedirect("Main.jsp");
+            response.sendRedirect("author.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }

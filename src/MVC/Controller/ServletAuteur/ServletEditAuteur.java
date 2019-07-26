@@ -16,23 +16,24 @@ import java.sql.SQLException;
 public class ServletEditAuteur extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         Auteur auteur= new Auteur();
 
-        auteur.setNum(Integer.parseInt(request.getParameter("num")));
-        auteur.setNom(request.getParameter("nom"));
-        auteur.setPrenom(request.getParameter("prenom"));
-        auteur.setNaissance(Date.valueOf(request.getParameter("naissance")));
+        auteur.setNum(Integer.parseInt(request.getParameter("Num")));
+        auteur.setNom(request.getParameter("Nom"));
+        auteur.setPrenom(request.getParameter("Prenom"));
+        auteur.setNaissance(Date.valueOf(request.getParameter("Date")));
 
         connectBdd connectBdd=new connectBdd();
 
         try {
-            connectBdd.editAuteur(auteur,1);
+            connectBdd.editAuteur(auteur);
+            response.sendRedirect("author.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

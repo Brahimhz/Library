@@ -14,14 +14,16 @@ import java.sql.SQLException;
 public class ServletDeleteAuteur extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         connectBdd connectBdd=new connectBdd();
         try {
-            connectBdd.deleteAuteur(1);
+            connectBdd.deleteAuteur(Integer.parseInt(request.getParameter("Num")));
+            response.sendRedirect("author.jsp");
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }
