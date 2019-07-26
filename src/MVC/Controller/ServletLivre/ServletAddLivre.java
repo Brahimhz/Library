@@ -1,9 +1,9 @@
 package MVC.Controller.ServletLivre;
 
-import MVC.Controller.connectBdd;
+import MVC.Controller.DataBase.connectBdd;
 import MVC.Model.Livre;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet(name = "ServletAddLivre")
@@ -27,7 +26,6 @@ public class ServletAddLivre extends HttpServlet {
         String [] auteur = (request.getParameter("num")).split(":");
         int num = Integer.parseInt(auteur[0]);
 
-        livre.setIssn(Integer.parseInt(request.getParameter("ISSN")));
         livre.setTitre(request.getParameter("titre"));
         livre.setResume(request.getParameter("resume"));
         livre.setNbrPage(Integer.parseInt(request.getParameter("nbrPage")));
@@ -39,12 +37,17 @@ public class ServletAddLivre extends HttpServlet {
 
         try {
             connectBdd.addLivre(livre);
-            connectBdd.addEcrit(livre.getIssn(),num);
+            connectBdd.addEcrit(livre.getTitre(),num);
             session.setAttribute("user","admin");
+            response.sendRedirect("books.jsp");
+        } catch (MySQLIntegrityConstraintViolationException e)
+        {
+            request.setAttribute("titre" , "false");
             response.sendRedirect("books.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         }else {
             response.sendRedirect("index.jsp");
         }

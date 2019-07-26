@@ -1,6 +1,6 @@
 package MVC.Controller.ServletAuteur;
 
-import MVC.Controller.connectBdd;
+import MVC.Controller.DataBase.connectBdd;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

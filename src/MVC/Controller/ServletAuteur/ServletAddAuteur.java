@@ -1,8 +1,7 @@
 package MVC.Controller.ServletAuteur;
 
-import MVC.Controller.connectBdd;
+import MVC.Controller.DataBase.connectBdd;
 import MVC.Model.Auteur;
-import MVC.Model.Livre;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +21,7 @@ public class ServletAddAuteur extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Auteur auteur= new Auteur();
 
-        auteur.setNum(Integer.parseInt(request.getParameter("num")));
+
         auteur.setNom(request.getParameter("nom"));
         auteur.setPrenom(request.getParameter("prenom"));
         auteur.setNaissance(Date.valueOf(request.getParameter("naissance")));

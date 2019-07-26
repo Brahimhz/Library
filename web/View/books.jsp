@@ -14,9 +14,19 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.Connection" %>
 <% Object user=session.getAttribute("user");
+    Object t=request.getAttribute("titre");
     if (user!=null)
     {
-
+        if (t!=null)
+        {
+            String titre=String.valueOf(t);
+            if (titre.equals("false"))
+            {
+%>
+<script>alert("titre exist dans la base de donnee")</script>
+<%
+        }
+        }
 %>
 
 <!DOCTYPE html>
@@ -53,9 +63,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="post" action="/addlivre" autocomplete="off">
-                                <div class="form-group">
-                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control" required>
-                                </div>
+
                                 <div class="form-group">
                                     <input type="text" name="titre" placeholder="Titre" class="form-control" required>
                                 </div>

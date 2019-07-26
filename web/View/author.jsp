@@ -53,9 +53,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="get" action="/addAuteur">
-                                <div class="form-group">
-                                    <input type="number" name="num" placeholder="Numero d'Auteur" class="form-control" min="0">
-                                </div>
+
                                 <div class="form-group">
                                     <input type="text" name="nom" placeholder="Nom" class="form-control" required>
                                 </div>

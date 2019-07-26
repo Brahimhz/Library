@@ -1,4 +1,4 @@
-package MVC.Controller;
+package MVC.Controller.DataBase;
 
 import MVC.Model.Auteur;
 import MVC.Model.Livre;
@@ -30,12 +30,11 @@ public class connectBdd {
 
 
     public void addLivre(Livre livre) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("insert into livre values(?,?,?,?,?)");
-        statement.setInt(1,livre.getIssn());
-        statement.setString(2,livre.getTitre());
-        statement.setString(3,livre.getResume());
-        statement.setInt(4,livre.getNbrPage());
-        statement.setString(5,livre.getDomaine());
+        PreparedStatement statement = connection.prepareStatement("insert into livre(titre, resume, nbrpage, domaine) values(?,?,?,?)");
+        statement.setString(1,livre.getTitre());
+        statement.setString(2,livre.getResume());
+        statement.setInt(3,livre.getNbrPage());
+        statement.setString(4,livre.getDomaine());
 
         statement.executeUpdate();
 
@@ -70,11 +69,10 @@ public class connectBdd {
 
     public void addAuteur(Auteur auteur)throws SQLException {
 
-        PreparedStatement statement = connection.prepareStatement("insert into auteur values(?,?,?,?)");
-        statement.setInt(1,auteur.getNum());
-        statement.setString(2,auteur.getNom());
-        statement.setString(3,auteur.getPrenom());
-        statement.setDate(4, (Date) auteur.getNaissance());
+        PreparedStatement statement = connection.prepareStatement("insert into auteur(nom, prenom, naissance) values(?,?,?)");
+        statement.setString(1,auteur.getNom());
+        statement.setString(2,auteur.getPrenom());
+        statement.setDate(3, (Date) auteur.getNaissance());
 
 
         statement.executeUpdate();
@@ -109,9 +107,19 @@ public class connectBdd {
 
 
 
-    public void addEcrit(int issn , int num)  throws SQLException{
+    public void addEcrit(String titre , int num)  throws SQLException{
 
-        PreparedStatement statement = connection.prepareStatement("insert into ecrit values(?,?)");
+      PreparedStatement preparedStatement = connection.prepareStatement("SELECT issn from livre where titre=?");
+      preparedStatement.setString(1,titre);
+
+      ResultSet set=preparedStatement.executeQuery();
+      int issn = 0;
+      while (set.next()){
+           issn= set.getInt(1);
+      }
+
+
+      PreparedStatement statement = connection.prepareStatement("insert into ecrit values(?,?)");
         statement.setInt(1,issn);
         statement.setInt(2,num);
 
