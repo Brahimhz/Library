@@ -1,10 +1,11 @@
-<%-- 
-    Document   : index
-    Created on : 30 mai 2019, 17:17:06
-    Author     : mus
+<%--
+  Created by IntelliJ IDEA.
+  User: try
+  Date: 26/07/2019
+  Time: 02:55
+  To change this template use File | Settings | File Templates.
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html"  pageEncoding="UTF-8" language="java" %>
 <%@page import="MVC.Model.Livre" %>
 <%@page import="java.util.List" %>
 <%@ page import="MVC.Model.Auteur" %>
@@ -42,6 +43,76 @@
 
 
         <ul class="navbar-nav navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popuplivre" style="margin: 0px 10px"><img src="add.svg"  width="30" height="30"  alt="" class="d-inline-block align-top" ></button>
+
+            <div class="modal" id="popuplivre" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center">
+                            <h4 class="modal-title">nouveau livre</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/addlivre" autocomplete="off">
+                                <div class="form-group">
+                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="titre" placeholder="Titre" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="resume" placeholder="Résumé" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name="nbrPage" placeholder="Nombre de pages" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="domaine" placeholder="domaine" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <%@ page import = "java.sql.*" %>
+                                    <%
+                                        Class.forName("com.mysql.jdbc.Driver");
+                                        String link="jdbc:mysql://localhost:3306/biblio";
+                                        Connection connection= DriverManager.getConnection(link,"root","");
+
+                                        Statement state = connection.createStatement();
+                                        ResultSet resultSet = state.executeQuery("select * from auteur order by num asc ");
+
+
+
+                                    %>
+                                    <input type="text" name="num" placeholder="auteur" class="form-control" list="Sauteur" required>
+                                    <datalist id="Sauteur">
+                                        <%
+                                            while (resultSet.next())
+                                            {
+
+
+                                        %>
+                                        <option value="<%= (String.valueOf(resultSet.getInt(1))+":"+(resultSet.getString(2)+" "+(resultSet.getString(3))))%>"></option>
+
+                                        <% }
+                                            resultSet.close();
+                                            state.close();
+                                            connection.close();%>
+                                    </datalist>
+                                </div>
+
+
+                                <div style="text-align: center">
+                                    <button class="btn btn-primary btn-group-justified " id="valideLivre"   type="submit">Valider</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </ul>
 
             <li class="nav-item">
                 <a href="/LogOut" > <button type="button" class="btn btn-light btn-lg" name="dec" style="margin: 0px 10px" >Disconnect</button></a>
@@ -50,7 +121,7 @@
 
 
 
-        </ul>
+        </li>
 
     </div>
 </header>
@@ -83,30 +154,26 @@
             Class.forName("com.mysql.jdbc.Driver");
             String link1="jdbc:mysql://localhost:3306/biblio";
             Connection connection1= DriverManager.getConnection(link1,"root","");
+
             Statement state1 = connection1.createStatement();
+            Statement state2 = connection1.createStatement();
+
             ResultSet resultSet1 = state1.executeQuery("select * from auteur order by nom asc ");
-            List<Livre> list = (List<Livre>) request.getAttribute("listL");
-            String Sauteur=null;
-            List<Auteur> list1=null;
-            if(Integer.valueOf(String.valueOf(request.getAttribute("type"))) == 1)
-                Sauteur=String.valueOf(request.getAttribute("Sauteur"));
-            else
-                list1= (List<Auteur>) request.getAttribute("listA");
-            if(list != null)
-                for (int i=0;i<list.size();i++) {
+            ResultSet resultSet2 = state2.executeQuery("SELECT l.* , a.nom , a.prenom FROM livre l , ecrit e , auteur a WHERE a.num=e.num and l.issn=e.issn order by l.issn");
+
+
+
+                while (resultSet2.next()) {
                     out.println("<tr>");
-                    out.println("<th scope=\"row\">"+list.get(i).getIssn()+"</th>");
-                    out.println("<td>"+list.get(i).getTitre()+"</td>");
-                    out.println("<td><div>"+list.get(i).getResume()+"</div></td>");
-                    out.println("<td>"+list.get(i).getNbrPage()+"</td>");
-                    out.println("<td>"+list.get(i).getDomaine()+"</td>");
-                    if(Integer.valueOf(String.valueOf(request.getAttribute("type"))) == 1)
-                        out.println("<td>"+Sauteur+"</td>");
-                    else
-                        out.println("<td>"+list1.get(i).getNom()+" "+list1.get(i).getPrenom()+"</td>");
+                    out.println("<th scope=\"row\">"+resultSet2.getString(1)+"</th>");
+                    out.println("<td>"+resultSet2.getString(2)+"</td>");
+                    out.println("<td><div>"+resultSet2.getString(3)+"</div></td>");
+                    out.println("<td>"+resultSet2.getString(4)+"</td>");
+                    out.println("<td>"+resultSet2.getString(5)+"</td>");
+                    out.println("<td>"+resultSet2.getString(6)+" "+resultSet2.getString(7)+"</td>");
                     out.println("<td>\n");
-                    out.println("<button type=\"button\" class=\"btn btn-danger badge-pill\" name=\"supprimer\" data-toggle=\"modal\" data-target=\"#popupsupplivre"+i+"\" >Supprimer</button>\n");
-                    out.println("<div class=\"modal\" id=\"popupsupplivre"+i+"\" tabindex=\"-1\">\n" +
+                    out.println("<button type=\"button\" class=\"btn btn-danger badge-pill\" name=\"supprimer\" data-toggle=\"modal\" data-target=\"#popupsupplivre"+resultSet2.getString(1)+"\" >Supprimer</button>\n");
+                    out.println("<div class=\"modal\" id=\"popupsupplivre"+resultSet2.getString(1)+"\" tabindex=\"-1\">\n" +
                             "                   <div class=\"modal-dialog modal-sm\">\n" +
                             "                       <div class=\"modal-content\">\n" +
                             "                           <div class=\"modal-header justify-content-center\">\n" +
@@ -116,8 +183,8 @@
                             "                               <form method=\"post\" action=\"/deletelivre\">\n" +
                             "\n" +
                             "                                   <div style=\"text-align: center\">\n" +
-                            "                                       <input type=\"hidden\" value="+list.get(i).getIssn()+" name=\"ISSN\">\n" +
-                            "                                       <label style=\" color:black \"> Vous voulez vraiment Supprimer le livre : "+list.get(i).getTitre()+" ?</label>\n" +
+                            "                                       <input type=\"hidden\" value="+resultSet2.getString(1)+" name=\"ISSN\">\n" +
+                            "                                       <label style=\" color:black \"> Vous voulez vraiment Supprimer le livre : "+resultSet2.getString(2)+" ?</label>\n" +
                             "                                   </div>\n" +
                             "                                   <div style=\"text-align: center\">\n" +
                             "                                       <button class=\"btn btn-primary btn-group-justified \" type=\"submit\" onclick=\"test\">Oui</button>\n" +
@@ -127,8 +194,8 @@
                             "                       </div>\n" +
                             "                   </div>\n" +
                             "               </div>");
-                    out.println("<button type=\"button\" class=\"btn btn-primary badge-pill\" name=\"modifier\"  data-toggle=\"modal\" data-target=\"#popupeditlivre"+i+"\">Modifier</button>\n");
-                    out.println("<div class=\"modal\" id=\"popupeditlivre"+i+"\" tabindex=\"-1\">\n" +
+                    out.println("<button type=\"button\" class=\"btn btn-primary badge-pill\" name=\"modifier\"  data-toggle=\"modal\" data-target=\"#popupeditlivre"+resultSet2.getString(1)+"\">Modifier</button>\n");
+                    out.println("<div class=\"modal\" id=\"popupeditlivre"+resultSet2.getString(1)+"\" tabindex=\"-1\">\n" +
                             "            \t  <div class=\"modal-dialog modal-sm\">\n" +
                             "            \t  \t<div class=\"modal-content\">\n" +
                             "            \t  \t\t<div class=\"modal-header justify-content-center\">\n" +
@@ -137,19 +204,19 @@
                             "            \t  \t\t<div class=\"modal-body\">\n" +
                             "            \t  \t\t\t<form method=\"post\" action=\"/editlivre\" autocomplete=\"off\">\n" +
                             "<div class=\"form-group\">\n" +
-                            "                                    <input type=\"text\" name=\"ISSN\"  class=\"form-control\" value="+list.get(i).getIssn()+" readonly>\n" +
+                            "                                    <input type=\"text\" name=\"ISSN\"  class=\"form-control\" value="+resultSet2.getString(1)+" readonly>\n" +
                             "                                </div>"+
                             "            \t  \t\t\t\t<div class=\"form-group\">\n" +
-                            "            \t  \t\t\t\t\t<input type=\"text\" name=\"titre\"  class=\"form-control\" value=\" "+list.get(i).getTitre()+"\" autocomplete=\"false\" required>"+
+                            "            \t  \t\t\t\t\t<input type=\"text\" name=\"titre\"  class=\"form-control\" value=\" "+resultSet2.getString(2)+"\" autocomplete=\"false\" required>"+
                             "            \t  \t\t\t\t</div>\n" +
                             "            \t  \t\t\t\t<div class=\"form-group\">\n" +
-                            "            \t  \t\t\t\t\t<input type=\"text\" name=\"resume\"  class=\"form-control\" value=\" "+list.get(i).getResume()+"\" autocomplete=\"false\" required>\n" +
+                            "            \t  \t\t\t\t\t<input type=\"text\" name=\"resume\"  class=\"form-control\" value=\" "+resultSet2.getString(3)+"\" autocomplete=\"false\" required>\n" +
                             "            \t  \t\t\t\t</div> \n" +
                             "                                            <div class=\"form-group\">\n" +
-                            "            \t  \t\t\t\t\t<input type=\"number\" name=\"nbrpage\"  class=\"form-control\" value="+list.get(i).getNbrPage()+" autocomplete=\"false\" required>\n" +
+                            "            \t  \t\t\t\t\t<input type=\"number\" name=\"nbrpage\"  class=\"form-control\" value="+resultSet2.getString(4)+" autocomplete=\"false\" required>\n" +
                             "            \t  \t\t\t\t</div> \n" +
                             "                                               <div class=\"form-group\">\n" +
-                            "            \t  \t\t\t\t\t<input type=\"text\" name=\"domaine\"  class=\"form-control\" value=\" "+list.get(i).getDomaine()+"\" autocomplete=\"false\" required>\n" +
+                            "            \t  \t\t\t\t\t<input type=\"text\" name=\"domaine\"  class=\"form-control\" value=\" "+resultSet2.getString(5)+"\" autocomplete=\"false\" required>\n" +
                             "            \t  \t\t\t\t</div> \n" );
                     out.println("<input type=\"text\" name=\"num\"  class=\"form-control\" list=\"Sauteur\" autocomplete=\"false\" required>\n" +
                             "                                    <datalist id=\"Sauteur\" >");
@@ -190,8 +257,6 @@
 
 
 </div>
-
-
 
 
 

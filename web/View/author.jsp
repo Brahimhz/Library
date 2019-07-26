@@ -43,7 +43,7 @@
 
 
         <ul class="navbar-nav navbar-nav flex-row ml-md-auto d-none d-md-flex">
-            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupauteur" style="margin: 0px 10px" >+auteur</button>
+            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupauteur" style="margin: 0px 10px" ><img src="add.svg"  width="30" height="30"  alt="" class="d-inline-block align-top" ></button>
 
             <div class="modal" id="popupauteur" tabindex="-1">
                 <div class="modal-dialog modal-sm">

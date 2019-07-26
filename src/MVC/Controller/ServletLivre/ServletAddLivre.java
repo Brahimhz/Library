@@ -41,7 +41,7 @@ public class ServletAddLivre extends HttpServlet {
             connectBdd.addLivre(livre);
             connectBdd.addEcrit(livre.getIssn(),num);
             session.setAttribute("user","admin");
-            response.sendRedirect("Main.jsp");
+            response.sendRedirect("books.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }

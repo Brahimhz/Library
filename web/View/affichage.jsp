@@ -42,7 +42,7 @@
     </head>
     <body>
         <header class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand  mb-0 h1" href="#" style="font-size: 28px">Biblio</a>
+    <a class="navbar-brand  mb-0 h1" href="index.jsp" style="font-size: 28px">Biblio</a>
 
   <div class="collapse navbar-collapse  mt-0" id="navbarNav">
      
@@ -78,10 +78,7 @@
             </div>
           </li>
          
-         <li class="nav-item">
-         <a class="nav-link" > <img src="books.svg"  width="40" height="40" class="d-inline-block align-top" alt=""></a>
 
-      </li>
       </ul>
     
   </div>

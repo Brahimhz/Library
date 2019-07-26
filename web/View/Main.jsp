@@ -39,86 +39,14 @@
 
           <li class="nav-item">
               <a class="btn btn-light btn-lg" href="author.jsp"> <img src="author.png"  width="30" height="30" class="d-inline-block align-top" alt=""></a>
-
+              <a class="btn btn-light btn-lg" href="books.jsp"> <img src="books1.png"  width="30" height="30" class="d-inline-block align-top" alt=""></a>
           </li>
 
            <li class="nav-item">
-            <button type="button" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popuplivre" style="margin: 0px 10px">+livre</button>
-           
-             <div class="modal" id="popuplivre" tabindex="-1">
-            	  <div class="modal-dialog modal-sm">
-            	  	<div class="modal-content">
-            	  		<div class="modal-header justify-content-center">
-            	  			<h4 class="modal-title">nouveau livre</h4>
-            	  		</div>
-            	  		<div class="modal-body">
-            	  			<form method="post" action="/addlivre" autocomplete="off">
-                                <div class="form-group">
-                                    <input type="number" name="ISSN" placeholder="ISSN" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-            	  					<input type="text" name="titre" placeholder="Titre" class="form-control" required>
-            	  				</div>
-            	  				<div class="form-group">
-            	  					<input type="text" name="resume" placeholder="Résumé" class="form-control" required>
-            	  				</div> 
-                                            <div class="form-group">
-            	  					<input type="number" name="nbrPage" placeholder="Nombre de pages" class="form-control" required>
-            	  				</div> 
-                                               <div class="form-group">
-            	  					<input type="text" name="domaine" placeholder="domaine" class="form-control" required>
-            	  				</div>
-                                <div class="form-group">
-                                    <%@ page import = "java.sql.*" %>
-                                    <%
-                                        Class.forName("com.mysql.jdbc.Driver");
-                                        String link="jdbc:mysql://localhost:3306/biblio";
-                                        Connection connection= DriverManager.getConnection(link,"root","");
-
-                                        Statement state = connection.createStatement();
-                                        ResultSet resultSet = state.executeQuery("select * from auteur order by num asc ");
-
-
-
-                                    %>
-                                    <input type="text" name="num" placeholder="auteur" class="form-control" list="Sauteur" required>
-                                    <datalist id="Sauteur">
-                                        <%
-                                            while (resultSet.next())
-                                            {
-
-
-                                        %>
-                                        <option value="<%= (String.valueOf(resultSet.getInt(1))+":"+(resultSet.getString(2)+" "+(resultSet.getString(3))))%>"></option>
-
-                                        <% }
-                                        resultSet.close();
-                                        state.close();
-                                        connection.close();%>
-                                    </datalist>
-                                </div>
-
-
-                                <div style="text-align: center">
-                           <button class="btn btn-primary btn-group-justified " id="valideLivre"   type="submit">Valider</button>
-            			</div> 
-                                        
-                                        </form>
-            	  		</div>
-            	  	</div>
-            	 </div>
-            </div>
-
-
-
-
                <a href="/LogOut" methods="get"><button type="submit" class="btn btn-light btn-lg" data-toggle="modal" data-target="#popupModal" style="margin: 0px 10px">Disconnect</button></a>
            </li>
-         
-         <li class="nav-item">
-             <a class="nav-link" > <img src="books.svg"  width="40" height="40" class="d-inline-block align-top" alt=""></a>
 
-      </li>
+
       </ul>
     
   </div>

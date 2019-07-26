@@ -27,7 +27,7 @@ public class ServletDeleteLivre extends HttpServlet {
             connectBdd.deleteEcrit(issn);
             connectBdd.deleteLivre(issn);
             session.setAttribute("user","admin");
-            response.sendRedirect("Main.jsp");
+            response.sendRedirect("books.jsp");
         }catch (SQLException e){
             e.printStackTrace();
         }

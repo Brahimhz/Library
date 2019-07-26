@@ -37,7 +37,7 @@ public class ServletEditLivre extends HttpServlet {
             connectBdd.editLivre(livre);
             connectBdd.editEcrit(Integer.parseInt(auteur[0]),livre.getIssn());
             session.setAttribute("user","admin");
-            response.sendRedirect("Main.jsp");
+            response.sendRedirect("books.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
         }
